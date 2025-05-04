@@ -19,6 +19,8 @@
 - 💬 Ask me about **Machine Learning**
 
 - 📫 How to reach me **Haquemahmudul600@gmail.com**
+- 🏆 Top 5 Finalist — Bangladesh Artificial Intelligence Olympiad 2025  
+🔗 [View Official Ranking](https://clist.by/standings/bangladesh-artificial-intelligence-olympiad-bdaio-2025-preliminary-round-private-59396029/)
 
 - 📄 Know about my experiences [https://github.com/Shawon5030/My_Resume](https://github.com/Shawon5030/My_Resume)
 
@@ -26,8 +28,7 @@
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
-🏆 Top 5 Finalist — Bangladesh Artificial Intelligence Olympiad 2025  
-🔗 [View Official Ranking](https://clist.by/standings/bangladesh-artificial-intelligence-olympiad-bdaio-2025-preliminary-round-private-59396029/)
+
 <a href="https://linkedin.com/in/mahmudulhaque600" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="Mahmudul Haque Shawon linkedin" height="30" width="40" /></a>
 <a href="https://kaggle.com/mahmudulhaqueshawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/kaggle.svg" alt="Mahmudul Haque Shawon Kaggle" height="30" width="40" /></a>
 <a href="https://fb.com/https://www.facebook.com/mahmudul.haque.shaw.n/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="https://web.facebook.com/profile.php?id=100076803278386" height="30" width="40" /></a>
