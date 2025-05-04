@@ -32,7 +32,11 @@
 </p>
 <a href="https://www.youtube.com/@Mahmudul_haque_Shawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="Mahmudul haque Shawon Youtube" height="30" width="40" /></a>
 </p>
-<a href="https://codeforces.com/profile/PythonicShawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codeforces.svg" alt="Mahmudul haque Shawon Youtube" height="30" width="40" /></a>
+<a href="https://codeforces.com/profile/PythonicShawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codeforces.svg" alt="Mahmudul haque Shawon codeforces" height="30" width="40" /></a>
+</p>
+<a href="https://leetcode.com/u/haquemahmudul600/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leetcode.svg" alt="Mahmudul haque Shawon leetcode" height="30" width="40" /></a>
+</p>
+<a href="https://www.hackerrank.com/profile/haquemahmudul600" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hackerrank.svg" alt="Mahmudul haque Shawon hackerrank" height="30" width="40" /></a>
 </p>
 
 <h3 align="left">Languages and Tools:</h3>
