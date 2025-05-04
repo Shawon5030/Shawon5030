@@ -26,9 +26,11 @@
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
-<a href="https://linkedin.com/in/mahmudulhaque600" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="mahmudulhaque600" height="30" width="40" /></a>
-<a href="https://kaggle.com/mahmudulhaqueshawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/kaggle.svg" alt="mahmudulhaqueshawon" height="30" width="40" /></a>
-<a href="https://fb.com/https://web.facebook.com/profile.php?id=100076803278386" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="https://web.facebook.com/profile.php?id=100076803278386" height="30" width="40" /></a>
+<a href="https://linkedin.com/in/mahmudulhaque600" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="Mahmudul Haque Shawon linkedin" height="30" width="40" /></a>
+<a href="https://kaggle.com/mahmudulhaqueshawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/kaggle.svg" alt="Mahmudul Haque Shawon Kaggle" height="30" width="40" /></a>
+<a href="https://fb.com/https://www.facebook.com/mahmudul.haque.shaw.n/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="https://web.facebook.com/profile.php?id=100076803278386" height="30" width="40" /></a>
+</p>
+<a href="https://www.youtube.com/@Mahmudul_haque_Shawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="Mahmudul haque Shawon Youtube" height="30" width="40" /></a>
 </p>
 
 <h3 align="left">Languages and Tools:</h3>
