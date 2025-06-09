@@ -1,70 +1,53 @@
-# 👋 Hi there, I'm Mahmudul Haque Shawon
+![logo](https://github.com/Shawon5030/Shawon5030/blob/main/image.png)
+<h1 align="center">Hi 👋, I'm Mahmudul Haque Shawon</h1>
+<h3 align="center">Machine Learning & AI Enthusiast</h3>
 
-**Python • Django • Machine Learning & Computer Vision Enthusiast**
+<img align="right" alt="coding" width="400" src="https://user-images.githubusercontent.com/55389276/140866485-8fb1c876-9a8f-4d6a-98dc-08c4981eaf70.gif">
 
-<p align="center">
-  <a href="https://github.com/Shawon5030"><img src="https://github-readme-stats.vercel.app/api?username=Shawon5030&show_icons=true&theme=default" alt="GitHub Stats"></a>
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=shawon5030&label=Profile%20views&color=0e75b6&style=flat" alt="shawon5030" /> </p>
+
+- 🔭 I’m currently working on **As a Machine learing Intern in Mentorness , CipherByte and Bharat intern**
+
+- 🌱 I’m currently learning **Data Science and AI**
+
+- 👯 I’m looking to collaborate on **As a Machine learing Intern also in CipherByte**
+
+- 🤝 I’m looking for help with **Machine learning and Ai**
+
+- 👨‍💻 All of my projects are available at [https://github.com/Shawon5030/Machine-learning-project](https://github.com/Shawon5030/Machine-learning-project)
+
+- 💬 Ask me about **Machine Learning**
+
+- 📫 How to reach me **Haquemahmudul600@gmail.com**
+- 🏆 Top 5 Finalist — Bangladesh Artificial Intelligence Olympiad 2025  
+🔗 [View Official Ranking](https://clist.by/standings/bangladesh-artificial-intelligence-olympiad-bdaio-2025-preliminary-round-private-59396029/)
+
+- 📄 Know about my experiences [https://github.com/Shawon5030/My_Resume](https://github.com/Shawon5030/My_Resume)
+
+- ⚡ Fun fact **I think i am funny**
+
+<h3 align="left">Connect with me:</h3>
+<p align="left">
+
+<a href="https://linkedin.com/in/mahmudulhaque600" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="Mahmudul Haque Shawon linkedin" height="30" width="40" /></a>
+<a href="https://kaggle.com/mahmudulhaqueshawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/kaggle.svg" alt="Mahmudul Haque Shawon Kaggle" height="30" width="40" /></a>
+<a href="https://fb.com/https://www.facebook.com/mahmudul.haque.shaw.n/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/facebook.svg" alt="https://web.facebook.com/profile.php?id=100076803278386" height="30" width="40" /></a>
+</p>
+<a href="https://www.youtube.com/@Mahmudul_haque_Shawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="Mahmudul haque Shawon Youtube" height="30" width="40" /></a>
+</p>
+<a href="https://codeforces.com/profile/PythonicShawon" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codeforces.svg" alt="Mahmudul haque Shawon codeforces" height="30" width="40" /></a>
+</p>
+<a href="https://leetcode.com/u/haquemahmudul600/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leetcode.svg" alt="Mahmudul haque Shawon leetcode" height="30" width="40" /></a>
+</p>
+<a href="https://www.hackerrank.com/profile/haquemahmudul600" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hackerrank.svg" alt="Mahmudul haque Shawon hackerrank" height="30" width="40" /></a>
 </p>
 
----
+<h3 align="left">Languages and Tools:</h3>
+<p align="left"> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> <a href="https://opencv.org/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/opencv/opencv-icon.svg" alt="opencv" width="40" height="40"/> </a> <a href="https://pandas.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="40" height="40"/> </a> <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a> <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a> <a href="https://pytorch.org/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/pytorch/pytorch-icon.svg" alt="pytorch" width="40" height="40"/> </a> <a href="https://scikit-learn.org/" target="_blank" rel="noreferrer"> <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="scikit_learn" width="40" height="40"/> </a> <a href="https://seaborn.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt="seaborn" width="40" height="40"/> </a> <a href="https://www.tensorflow.org" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg" alt="tensorflow" width="40" height="40"/> </a> </p>
 
-## 🎯 About Me
-- :contentReference[oaicite:1]{index=1}  
-- :contentReference[oaicite:2]{index=2} :contentReference[oaicite:3]{index=3}  
-- :contentReference[oaicite:4]{index=4} :contentReference[oaicite:5]{index=5}  
-- :contentReference[oaicite:6]{index=6} :contentReference[oaicite:7]{index=7}  
+<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=shawon5030&show_icons=true&locale=en&layout=compact" alt="shawon5030" /></p>
 
----
+<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=shawon5030&show_icons=true&locale=en" alt="shawon5030" /></p>
 
-## 🛠️ Skills & Tools
+<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=shawon5030&" alt="shawon5030" /></p>
 
-| Category              | Technologies & Tools |
-|-----------------------|----------------------|
-| **Languages**         | :contentReference[oaicite:8]{index=8} |
-| **Frameworks**        | :contentReference[oaicite:9]{index=9} |
-| :contentReference[oaicite:10]{index=10}       | :contentReference[oaicite:11]{index=11} |
-| **Web & DevOps**      | :contentReference[oaicite:12]{index=12} |
-
----
-
-## 📘 Projects
-
-- :contentReference[oaicite:13]{index=13} :contentReference[oaicite:14]{index=14}  
-- :contentReference[oaicite:15]{index=15} :contentReference[oaicite:16]{index=16}  
-- :contentReference[oaicite:17]{index=17} :contentReference[oaicite:18]{index=18}  
-
----
-
-## 🧩 Recent Writings & Talks
-
-- :contentReference[oaicite:19]{index=19} :contentReference[oaicite:20]{index=20}  
-- :contentReference[oaicite:21]{index=21} :contentReference[oaicite:22]{index=22}  
-- :contentReference[oaicite:23]{index=23} :contentReference[oaicite:24]{index=24}  
-
----
-
-## 📬 Get In Touch
-
-<!-- Update these links to your active profiles -->
-- :contentReference[oaicite:25]{index=25}  
-- :contentReference[oaicite:26]{index=26} :contentReference[oaicite:27]{index=27}  
-- :contentReference[oaicite:28]{index=28} :contentReference[oaicite:29]{index=29}  
-- :contentReference[oaicite:30]{index=30} :contentReference[oaicite:31]{index=31}  
-
----
-
-## 💡 Fun Facts
-
-- :contentReference[oaicite:32]{index=32} :contentReference[oaicite:33]{index=33}  
-- Enjoys singing & playing guitar 🎸  
-- Active community member, posting tutorials and project insights online  
-
----
-
-## 🚀 Let's Build Together!
-
-I’m passionate about open-source contributions, collaborating on ML/AI, web development, and competitive programming challenges. Feel free to explore my repos, leave feedback, or reach out—I’d love to connect!
-
----
-
-*Last updated: June 2025*
