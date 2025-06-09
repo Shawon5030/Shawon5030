@@ -28,20 +28,20 @@
 
 ### 🔗 Connect With Me
 
-| Platform        | Link                                                                                     |
-|----------------|-------------------------------------------------------------------------------------------|
-| LinkedIn        | [linkedin.com/in/mahmudulhaque600](https://linkedin.com/in/mahmudulhaque600)             |
-| Facebook        | [facebook.com/mahmudul.haque.shaw.n](https://www.facebook.com/mahmudul.haque.shaw.n/)   |
-| Kaggle          | [kaggle.com/mahmudulhaqueshawon](https://www.kaggle.com/mahmudulhaqueshawon)             |
-| YouTube         | [YouTube Channel](https://www.youtube.com/@Mahmudul_haque_Shawon)                        |
-| Codeforces      | [codeforces.com/profile/PythonicShawon](https://codeforces.com/profile/PythonicShawon)  |
-| LeetCode        | [leetcode.com/u/haquemahmudul600](https://leetcode.com/u/haquemahmudul600/)             |
-| HackerRank      | [hackerrank.com/profile/haquemahmudul600](https://www.hackerrank.com/profile/haquemahmudul600) |
-| GitHub Profile  | [github.com/Shawon5030](https://github.com/Shawon5030)                                   |
-| Portfolio Site  | [mahmudulhaqueshawon.com](https://mahmudulhaqueshawon.com/)                              |
-| Medium Blog     | [medium.com/@haquemahmudul600](https://medium.com/@haquemahmudul600)                     |
-| Instagram       | [instagram.com/mahmudulhaqueshawon](https://www.instagram.com/mahmudulhaqueshawon/)     |
-| Instagram (Alt) | [instagram.com/mahmudul.100](https://www.instagram.com/mahmudul.100)                     |
+| Platform         | Link                                                                                   |
+|------------------|----------------------------------------------------------------------------------------|
+| GitHub           | [github.com/Shawon5030](https://github.com/Shawon5030)                                 |
+| Facebook         | [facebook.com/mahmudulhaqueshawon.pythonlover](https://www.facebook.com/mahmudulhaqueshawon.pythonlover) |
+| Kaggle           | [kaggle.com/mahmudulhaqueshawon](https://www.kaggle.com/mahmudulhaqueshawon)           |
+| Codeforces       | [codeforces.com/profile/PythonicShawon](https://codeforces.com/profile/PythonicShawon) |
+| LeetCode         | [leetcode.com/u/haquemahmudul600](https://leetcode.com/u/haquemahmudul600/)           |
+| HackerRank       | [hackerrank.com/profile/haquemahmudul600](https://www.hackerrank.com/profile/haquemahmudul600) |
+| Wakatime         | [wakatime.com/@Shawon](https://wakatime.com/@Shawon)                                   |
+| Pinterest        | [pinterest.com/mahmudulhaqueshawon](https://www.pinterest.com/mahmudulhaqueshawon/)   |
+| Medium           | [medium.com/@haquemahmudul600](https://medium.com/@haquemahmudul600)                   |
+| Dev.to           | [dev.to/mahmudulhaqueshawon](https://dev.to/mahmudulhaqueshawon)                       |
+| Twitter          | [x.com/Mahmudul_100](https://x.com/Mahmudul_100)                                       |
+| Instagram        | [instagram.com/mahmudulhaqueshawon.insta](https://www.instagram.com/mahmudulhaqueshawon.insta/) |
 
 ---
 
