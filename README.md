@@ -38,7 +38,7 @@
 | HackerRank       | [hackerrank.com/profile/haquemahmudul600](https://www.hackerrank.com/profile/haquemahmudul600) |
 | Wakatime         | [wakatime.com/@Shawon](https://wakatime.com/@Shawon)                                   |
 | Pinterest        | [pinterest.com/mahmudulhaqueshawon](https://www.pinterest.com/mahmudulhaqueshawon/)    |
-| Medium           | [medium.com/@haquemahmudul600](https://mahmudulhaqueshawon.medium.com/)]              |
+| Medium           | [mahmudulhaqueshawon.medium.com](https://mahmudulhaqueshawon.medium.com/)]              |
 | Dev.to           | [dev.to/mahmudulhaqueshawon](https://dev.to/mahmudulhaqueshawon)                       |
 | Twitter          | [x.com/Mahmudul_100](https://x.com/Mahmudul_100)                                       |
 | Instagram        | [instagram.com/mahmudulhaqueshawon.insta](https://www.instagram.com/mahmudulhaqueshawon.insta/) |
