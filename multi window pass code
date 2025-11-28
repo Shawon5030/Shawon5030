@@ -1,0 +1,313 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+import time
+import random
+import threading
+
+class FacebookCodeSender:
+    def __init__(self):
+        self.results = []
+        self.lock = threading.Lock()
+        
+    def create_driver(self, window_id):
+        """Create separate Chrome driver for each window"""
+        options = webdriver.ChromeOptions()
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
+        options.add_argument("--window-size=1000,700")
+        options.add_argument(f"--window-position={window_id * 200},{window_id * 100}")
+        
+        driver = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install()),
+            options=options
+        )
+        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+        
+        print(f"🪟 Chrome Window {window_id + 1} started")
+        return driver
+    
+    def process_single_number(self, phone_number, window_id):
+        """Process a single number in separate Chrome window"""
+        print(f"\n🔹 Processing in Window {window_id + 1}: {phone_number}")
+        
+        # Create separate driver for this window
+        driver = self.create_driver(window_id)
+        wait = WebDriverWait(driver, 15)
+        
+        try:
+            # Step 1: Go to Facebook and search
+            driver.get("https://www.facebook.com/login/identify")
+            time.sleep(3)
+            
+            # Enter phone number
+            phone_input = wait.until(EC.presence_of_element_located((By.ID, "identify_email")))
+            phone_input.clear()
+            phone_input.send_keys(phone_number)
+            time.sleep(2)
+            
+            # Click search button
+            search_btn = wait.until(EC.element_to_be_clickable((By.NAME, "did_submit")))
+            search_btn.click()
+            time.sleep(4)
+            
+            # Step 2: Handle multiple accounts
+            self.handle_multi_account_selection(driver)
+            
+            # Step 3: Check and click "Try another way" if available
+            self.handle_try_another_way(driver)
+            
+            # Step 4: Select SMS and click continue
+            if not self.select_sms_and_continue(driver):
+                driver.quit()
+                return False, "SMS selection failed"
+            
+            # Step 5: Check if successful
+            if self.check_success(driver):
+                result_msg = f"✅ Code sent successfully to: {phone_number}"
+                print(result_msg)
+                driver.quit()
+                return True, "Code sent successfully"
+            else:
+                result_msg = f"⚠️ Code sending status unclear for: {phone_number}"
+                print(result_msg)
+                driver.quit()
+                return True, "Attempt made - status unclear"
+                
+        except Exception as e:
+            error_msg = f"❌ Error in Window {window_id + 1}: {str(e)}"
+            print(error_msg)
+            driver.quit()
+            return False, f"Error: {str(e)}"
+    
+    def handle_multi_account_selection(self, driver):
+        """Auto-select first account if multiple accounts found"""
+        try:
+            account_buttons = driver.find_elements(By.XPATH, 
+                "//a[contains(@class, '_42ft') and contains(text(), 'This is my account')]")
+            
+            if len(account_buttons) > 1:
+                print(f"   🔍 Found {len(account_buttons)} accounts, selecting first one")
+                account_buttons[0].click()
+                time.sleep(3)
+                return True
+            elif len(account_buttons) == 1:
+                print("   🔍 Found 1 account, selecting it")
+                account_buttons[0].click()
+                time.sleep(3)
+                return True
+            return False
+                
+        except Exception as e:
+            print(f"   ⚠️ No multiple accounts found: {e}")
+            return False
+    
+    def handle_try_another_way(self, driver):
+        """Check and click 'Try another way' if available"""
+        try:
+            try_another_elements = driver.find_elements(By.XPATH, 
+                "//a[contains(@href, 'tryanotherway') or contains(text(), 'Try another way')]")
+            
+            if try_another_elements:
+                print("   🔄 'Try another way' found, clicking...")
+                try_another_elements[0].click()
+                time.sleep(3)
+                return True
+            return False
+            
+        except Exception as e:
+            print(f"   ❌ Error handling 'Try another way': {e}")
+            return False
+    
+    def select_sms_and_continue(self, driver):
+        """Select SMS option and click continue"""
+        try:
+            # Select SMS option
+            sms_selectors = [
+                "//input[contains(@id, 'send_sms:')]",
+                "//div[contains(text(),'Send code via SMS')]",
+                "//span[contains(text(),'Send code via SMS')]"
+            ]
+            
+            for selector in sms_selectors:
+                try:
+                    sms_elements = driver.find_elements(By.XPATH, selector)
+                    if sms_elements:
+                        if "input" in selector:
+                            radio_id = sms_elements[0].get_attribute("id")
+                            if radio_id:
+                                label = driver.find_element(By.XPATH, f"//label[@for='{radio_id}']")
+                                label.click()
+                        else:
+                            sms_elements[0].click()
+                        
+                        print("   📱 SMS option selected")
+                        time.sleep(2)
+                        break
+                except:
+                    continue
+            
+            # Click continue button
+            continue_selectors = [
+                "//button[contains(@name, 'reset_action')]",
+                "//button[contains(text(),'Continue')]",
+                "//input[@value='Continue']"
+            ]
+            
+            for selector in continue_selectors:
+                try:
+                    continue_buttons = driver.find_elements(By.XPATH, selector)
+                    if continue_buttons:
+                        continue_buttons[0].click()
+                        print("   ➡️ Continue clicked")
+                        time.sleep(3)
+                        return True
+                except:
+                    continue
+            
+            return False
+            
+        except Exception as e:
+            print(f"   ❌ Error in SMS selection: {e}")
+            return False
+    
+    def check_success(self, driver):
+        """Check if code was sent successfully"""
+        try:
+            success_indicators = [
+                "code has been sent",
+                "sent to your phone",
+                "recovery code", 
+                "check your phone"
+            ]
+            
+            page_text = driver.page_source.lower()
+            return any(indicator in page_text for indicator in success_indicators)
+        except:
+            return False
+    
+    def process_with_threads(self, phone_numbers, max_windows):
+        """Process numbers using multiple Chrome windows with threads"""
+        print(f"🚀 Starting multi-window processing for {len(phone_numbers)} numbers")
+        print(f"🪟 Max Chrome windows: {max_windows}")
+        
+        def worker(phone_number, window_id):
+            """Worker function for each thread"""
+            success, message = self.process_single_number(phone_number, window_id)
+            
+            with self.lock:
+                self.results.append({
+                    'phone_number': phone_number,
+                    'success': success,
+                    'message': message,
+                    'window': window_id + 1
+                })
+        
+        # Process in batches
+        for batch_start in range(0, len(phone_numbers), max_windows):
+            batch_end = min(batch_start + max_windows, len(phone_numbers))
+            batch_numbers = phone_numbers[batch_start:batch_end]
+            
+            print(f"\n🔄 Processing batch: {batch_start + 1} to {batch_end}")
+            
+            threads = []
+            
+            # Start threads for current batch
+            for i, phone_number in enumerate(batch_numbers):
+                window_id = batch_start + i
+                thread = threading.Thread(target=worker, args=(phone_number, window_id))
+                threads.append(thread)
+                thread.start()
+                time.sleep(2)  # Stagger thread starts
+            
+            # Wait for all threads in current batch to complete
+            for thread in threads:
+                thread.join()
+            
+            print(f"✅ Batch completed: {batch_start + 1} to {batch_end}")
+            
+            # Delay between batches
+            if batch_end < len(phone_numbers):
+                print("⏳ Preparing next batch in 5 seconds...")
+                time.sleep(5)
+        
+        return self.results
+    
+    def print_summary(self):
+        """Print summary of results"""
+        if not self.results:
+            print("No results to display")
+            return
+        
+        successful = sum(1 for r in self.results if r['success'])
+        failed = len(self.results) - successful
+        
+        print("\n" + "="*50)
+        print("📊 MULTI-WINDOW PROCESSING SUMMARY")
+        print("="*50)
+        print(f"✅ Successful: {successful}")
+        print(f"❌ Failed: {failed}")
+        print(f"📋 Total: {len(self.results)}")
+        print(f"🪟 Windows used: {len(set(r['window'] for r in self.results))}")
+        print("="*50)
+        
+        if failed > 0:
+            print("\n❌ FAILED NUMBERS:")
+            for result in self.results:
+                if not result['success']:
+                    print(f"  - {result['phone_number']} (Window {result['window']}): {result['message']}")
+
+def main():
+    """Main function"""
+    print("🚀 Facebook SMS Code Sender - Multi-Chrome-Window")
+    print("=" * 50)
+    
+    # Input phone numbers
+    phone_numbers = []
+    print("\nEnter phone numbers (one per line, empty line to finish):")
+    
+    while True:
+        number = input().strip()
+        if not number:
+            break
+        phone_numbers.append(number)
+    
+    if not phone_numbers:
+        print("❌ No phone numbers provided")
+        return
+    
+    # Get max windows
+    try:
+        max_windows = int(input("Enter maximum Chrome windows (default 3): ") or "3")
+        max_windows = min(max_windows, 5)  # Limit to 5 windows max for safety
+    except:
+        max_windows = 3
+    
+    print(f"\n📋 Processing {len(phone_numbers)} numbers")
+    print(f"🪟 Using {max_windows} Chrome windows simultaneously")
+    print("💻 Each number will run in separate Chrome window!")
+    
+    # Initialize sender
+    sender = FacebookCodeSender()
+    
+    try:
+        # Process all numbers with multiple windows
+        results = sender.process_with_threads(phone_numbers, max_windows)
+        
+        # Print summary
+        sender.print_summary()
+        
+        print("\n🎉 Multi-window processing completed!")
+        print("🔚 All Chrome windows have been closed automatically")
+        
+    except KeyboardInterrupt:
+        print("\n⏹️ Process stopped by user")
+    except Exception as e:
+        print(f"\n❌ Error: {e}")
+
+if __name__ == "__main__":
+    main()
