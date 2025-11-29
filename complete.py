@@ -4,6 +4,10 @@ import threading
 import time
 import os
 import requests
+import uuid
+import hashlib
+import random
+import json
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -15,47 +19,106 @@ from webdriver_manager.chrome import ChromeDriverManager
 # --- Utility Classes ---
 
 class LicenseManager:
+    """Manages license checking with Unique Random Generation based on GitHub check."""
     def __init__(self):
         self.license_file = "license.txt"
-        self.github_raw_url = "https://raw.githubusercontent.com/Shawon5030/Shawon5030/refs/heads/main/licency.txt"
+        # ⚠️ IMPORTANT: আপনার GitHub RAW লিংক
+        self.github_raw_url = "https://raw.githubusercontent.com/Shawon5030/youknow/refs/heads/main/allright.txt"
     
-    def check_license(self):
-
+    def get_existing_keys(self):
+        """Fetches all existing keys from GitHub to ensure uniqueness."""
+        existing_keys = set()
+        nocache_url = f"{self.github_raw_url}?v={random.randint(1, 1000000)}"
         try:
-            # Read local license key
-            if not os.path.exists(self.license_file):
-                return False, "License file not found"
+            response = requests.get(nocache_url, timeout=10)
+            if response.status_code == 200:
+                # Handle both single and double quotes
+                content = response.text.replace("'", '"')
+                try:
+                    data = json.loads(content)
+                    if isinstance(data, list):
+                        for entry in data:
+                            existing_keys.update(entry.keys())
+                except json.JSONDecodeError:
+                    pass # If server data is corrupt, we proceed with empty set
+        except:
+            pass # If offline, we proceed with empty set (risk is low with random uuid)
+        return existing_keys
+
+    def generate_unique_key(self):
+        """Generates a guaranteed unique ID by checking against GitHub."""
+        existing_keys = self.get_existing_keys()
+        
+        while True:
+            # Generate a Random Unique Key (SHAWON-XXXX-XXXX-XXXX)
+            # Using uuid4 (Random) instead of getnode (Hardware) to ensure we can generate fresh keys
+            uid = uuid.uuid4().hex.upper()
+            new_key = f"SHAWON-{uid[:4]}-{uid[4:8]}-{uid[8:12]}"
+            
+            # If key doesn't exist in GitHub, break the loop
+            if new_key not in existing_keys:
+                return new_key
+
+    def check_license(self):
+        """Check license from GitHub and local file (JSON Format)"""
+        try:
+            # Step 1: Check/Create local license file
+            if not os.path.exists(self.license_file) or os.stat(self.license_file).st_size == 0:
+                unique_key = self.generate_unique_key()
+                with open(self.license_file, 'w') as f:
+                    f.write(unique_key)
+                return False, f"New Key Generated: {unique_key}\nPlease send this key to Admin for activation."
             
             with open(self.license_file, 'r') as f:
                 local_key = f.read().strip()
             
             if not local_key:
-                return False, "Empty license key"
+                unique_key = self.generate_unique_key()
+                with open(self.license_file, 'w') as f:
+                    f.write(unique_key)
+                return False, f"Key Generated: {unique_key}\nPlease send this key to Admin."
+
+            # Step 2: Download License Data with Cache Busting
+            nocache_url = f"{self.github_raw_url}?v={random.randint(1, 1000000)}"
             
-            # Check GitHub for license validation
-            response = requests.get(self.github_raw_url)
+            try:
+                response = requests.get(nocache_url, timeout=10)
+            except requests.exceptions.RequestException:
+                return False, "Internet connection failed. Cannot verify license."
+
             if response.status_code == 200:
-                remote_data = response.text.strip().split('\n')
-                license_data = {}
-                
-                for line in remote_data:
-                    if ':' in line:
-                        key, value = line.split(':', 1)
-                        license_data[key.strip()] = value.strip()
-                
-                # Verify license key and expiration
-                if local_key in license_data:
-                    expiry_date_str = license_data[local_key]
-                    expiry_date = datetime.strptime(expiry_date_str, "%Y-%m-%d")
+                server_content = response.text  # Debugging purpose
+                try:
+                    # JSON Parse Try
+                    # FIX: Replace single quotes with double quotes automatically
+                    formatted_content = server_content.replace("'", '"')
+                    remote_licenses = json.loads(formatted_content)
                     
-                    if datetime.now() > expiry_date:
-                        return False, f"License expired on {expiry_date_str}"
+                    found_expiry_date = None
+                    
+                    if isinstance(remote_licenses, list):
+                        for license_obj in remote_licenses:
+                            if local_key in license_obj:
+                                found_expiry_date = license_obj[local_key]
+                                break
+                    
+                    if found_expiry_date:
+                        try:
+                            expiry_date = datetime.strptime(found_expiry_date, "%Y-%m-%d")
+                            if datetime.now() > expiry_date:
+                                return False, f"License Expired on {found_expiry_date}.\nContact Admin to renew."
+                            else:
+                                return True, f"Active (Expires: {found_expiry_date})"
+                        except ValueError:
+                            return False, "Date format error in server database."
                     else:
-                        return True, f"License valid until {expiry_date_str}"
-                else:
-                    return False, "Invalid license key"
+                        return False, f"Key Not Active.\nYour Key: {local_key}\nSend to Admin."
+                        
+                except json.JSONDecodeError:
+                    preview = server_content[:200]
+                    return False, f"Server Data Error!\nServer sent:\n{preview}\n\n(Fix your GitHub file format to valid JSON)"
             else:
-                return False, "Could not verify license online"
+                return False, f"Server Error: {response.status_code}"
                 
         except Exception as e:
             return False, f"License check error: {str(e)}"
@@ -64,9 +127,7 @@ class FloatingWindowManager:
     """Manages the UI for separate browser windows and background mode."""
     def __init__(self):
         self.floating_windows = {} 
-        # Floating mode: Now means "Visible (Taskbar) but Minimized"
         self.floating_mode = tk.BooleanVar(value=True) 
-        # Background mode: Runs Chrome headless (invisible)
         self.background_mode = tk.BooleanVar(value=False) 
     
     def create_floating_window(self, window_id, driver):
@@ -91,7 +152,7 @@ class FacebookCodeSender:
         self.stop_processing = False
         
     def create_driver(self, window_id):
-        """Create separate Chrome driver, applying headless mode or minimizing it."""
+        """Create separate Chrome driver."""
         options = webdriver.ChromeOptions()
         options.add_argument("--disable-blink-features=AutomationControlled")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -105,7 +166,6 @@ class FacebookCodeSender:
         else:
             options.add_argument("--window-size=1000,700")
             options.add_argument(f"--window-position={window_id * 50},{window_id * 50}")
-
 
         driver = webdriver.Chrome(
             service=Service(ChromeDriverManager().install()),
@@ -124,134 +184,96 @@ class FacebookCodeSender:
         return driver
     
     def is_captcha_present(self, driver):
-        """Checks for specific Captcha indicators (g-recaptcha) based on user HTML."""
         try:
             page_source = driver.page_source.lower()
-            
-            # Check 1: The specific class user mentioned
-            if "g-recaptcha" in page_source:
-                return True
-            
-            # Check 2: Iframe typical of reCAPTCHA
+            if "g-recaptcha" in page_source: return True
             iframes = driver.find_elements(By.TAG_NAME, "iframe")
             for iframe in iframes:
-                title = iframe.get_attribute("title")
-                src = iframe.get_attribute("src")
-                if title and "recaptcha" in title.lower():
-                    return True
-                if src and "google.com/recaptcha" in src:
-                    return True
-                    
-            # Check 3: Text fallbacks
-            if "security check" in page_source or "enter the text" in page_source:
-                return True
-                
+                if "recaptcha" in (iframe.get_attribute("title") or "").lower(): return True
+                if "google.com/recaptcha" in (iframe.get_attribute("src") or ""): return True
+            if "security check" in page_source or "enter the text" in page_source: return True
             return False
-        except:
-            return False
+        except: return False
 
     def process_single_number(self, phone_number, window_id):
-        """Process a single number with Updated Status Logic including robust Captcha detection"""
-        if self.stop_processing:
-            return False, "Stopped"
+        if self.stop_processing: return False, "Stopped"
         
         driver = self.create_driver(window_id)
         wait_time = 30 if self.floating_manager.background_mode.get() else 15
         wait = WebDriverWait(driver, wait_time)
         
         try:
-            # Step 1: Go to Facebook
             driver.get("https://www.facebook.com/login/identify")
             time.sleep(3)
             
-            # Initial Captcha Check
             if self.is_captcha_present(driver):
                  driver.quit()
                  if window_id in self.drivers: del self.drivers[window_id]
                  return False, "Captcha"
 
-            # Enter phone number
             phone_input = wait.until(EC.presence_of_element_located((By.ID, "identify_email")))
             phone_input.clear()
             phone_input.send_keys(phone_number)
             time.sleep(2)
             
-            # Click search button
             search_btn = wait.until(EC.element_to_be_clickable((By.NAME, "did_submit")))
             search_btn.click()
             time.sleep(4)
             
-            # --- CHECK FOR NOT FOUND & CAPTCHA EARLY ---
             page_source = driver.page_source.lower()
             
-            # Check Captcha Priority
             if self.is_captcha_present(driver):
                  driver.quit()
                  if window_id in self.drivers: del self.drivers[window_id]
                  return False, "Captcha"
 
-            # Check Not Found
             if "no search results" in page_source or "didn't match any account" in page_source:
                 driver.quit()
                 if window_id in self.drivers: del self.drivers[window_id]
                 return False, "Not Found"
             
-            # Step 2: Handle multiple accounts
             self.handle_multi_account_selection(driver)
-            
-            # Step 3: Try another way
             self.handle_try_another_way(driver)
             
-            # Double check for Captcha again
             if self.is_captcha_present(driver):
                  driver.quit()
                  if window_id in self.drivers: del self.drivers[window_id]
                  return False, "Captcha"
             
-            # Step 4: Select SMS
             if not self.select_sms_and_continue(driver):
-                # If SMS selection failed, check if it was due to Captcha
                 if self.is_captcha_present(driver):
                     driver.quit()
                     if window_id in self.drivers: del self.drivers[window_id]
                     return False, "Captcha"
-                    
                 driver.quit()
                 if window_id in self.drivers: del self.drivers[window_id]
                 return False, "Failed (SMS option not found)"
             
-            # Step 5: Check Success
             if self.check_success(driver):
-                # Wait 3 seconds before closing as requested
                 time.sleep(3)
                 driver.quit()
                 if window_id in self.drivers: del self.drivers[window_id]
                 return True, "Successful"
             else:
-                # If success text not found, check if captcha appeared late
                 if self.is_captcha_present(driver):
-                     driver.quit()
-                     if window_id in self.drivers: del self.drivers[window_id]
-                     return False, "Captcha"
-                     
+                      driver.quit()
+                      if window_id in self.drivers: del self.drivers[window_id]
+                      return False, "Captcha"
                 driver.quit()
                 if window_id in self.drivers: del self.drivers[window_id]
                 return False, "Failed"
                 
         except Exception as e:
-            error_msg = f"Error: {str(e)}"
             try:
                 driver.quit()
                 if window_id in self.drivers: del self.drivers[window_id]
-            except:
-                pass
-            return False, "Failed" # Generic failure
+            except: pass
+            return False, "Failed"
     
     def handle_multi_account_selection(self, driver):
         try:
-            account_buttons = driver.find_elements(By.XPATH, 
-                "//a[contains(@class, '_42ft') and contains(text(), 'This is my account')]")
-            if len(account_buttons) > 0:
+            account_buttons = driver.find_elements(By.XPATH, "//a[contains(@class, '_42ft') and contains(text(), 'This is my account')]")
+            if account_buttons:
                 account_buttons[0].click()
                 time.sleep(3)
                 return True
@@ -260,8 +282,7 @@ class FacebookCodeSender:
     
     def handle_try_another_way(self, driver):
         try:
-            try_another_elements = driver.find_elements(By.XPATH, 
-                "//a[contains(@href, 'tryanotherway') or contains(text(), 'Try another way')]")
+            try_another_elements = driver.find_elements(By.XPATH, "//a[contains(@href, 'tryanotherway') or contains(text(), 'Try another way')]")
             if try_another_elements:
                 try_another_elements[0].click()
                 time.sleep(3)
@@ -272,12 +293,7 @@ class FacebookCodeSender:
     def select_sms_and_continue(self, driver):
         try:
             sms_selected = False
-            sms_selectors = [
-                "//input[contains(@id, 'send_sms:')]",
-                "//div[contains(text(),'Send code via SMS')]",
-                "//span[contains(text(),'Send code via SMS')]"
-            ]
-            
+            sms_selectors = ["//input[contains(@id, 'send_sms:')]", "//div[contains(text(),'Send code via SMS')]", "//span[contains(text(),'Send code via SMS')]"]
             for selector in sms_selectors:
                 try:
                     sms_elements = driver.find_elements(By.XPATH, selector)
@@ -285,8 +301,7 @@ class FacebookCodeSender:
                         if "input" in selector:
                             radio_id = sms_elements[0].get_attribute("id")
                             if radio_id:
-                                label = driver.find_element(By.XPATH, f"//label[@for='{radio_id}']")
-                                label.click()
+                                driver.find_element(By.XPATH, f"//label[@for='{radio_id}']").click()
                         else:
                             sms_elements[0].click()
                         time.sleep(2)
@@ -296,12 +311,7 @@ class FacebookCodeSender:
             
             if not sms_selected: return False 
             
-            continue_selectors = [
-                "//button[contains(@name, 'reset_action')]",
-                "//button[contains(text(),'Continue')]",
-                "//input[@value='Continue']"
-            ]
-            
+            continue_selectors = ["//button[contains(@name, 'reset_action')]", "//button[contains(text(),'Continue')]", "//input[@value='Continue']"]
             for selector in continue_selectors:
                 try:
                     continue_buttons = driver.find_elements(By.XPATH, selector)
@@ -315,10 +325,7 @@ class FacebookCodeSender:
     
     def check_success(self, driver):
         try:
-            success_indicators = [
-                "code has been sent", "sent to your phone", "recovery code", "check your phone",
-                "sent to your mobile", "we sent a code"
-            ]
+            success_indicators = ["code has been sent", "sent to your phone", "recovery code", "check your phone", "sent to your mobile", "we sent a code"]
             page_text = driver.page_source.lower()
             return any(indicator in page_text for indicator in success_indicators)
         except: return False
@@ -332,12 +339,7 @@ class FacebookCodeSender:
             if self.stop_processing: return
             success, message = self.process_single_number(phone_number, window_id)
             with self.lock:
-                batch_results.append({
-                    'phone_number': phone_number,
-                    'success': success,
-                    'message': message, # Will be 'Successful', 'Not Found', 'Captcha', etc.
-                    'window': window_id + 1
-                })
+                batch_results.append({'phone_number': phone_number, 'success': success, 'message': message, 'window': window_id + 1})
         
         for i, phone_number in enumerate(phone_numbers):
             if self.stop_processing: break
@@ -408,8 +410,8 @@ class FacebookCodeSenderGUI:
         floating_check.grid(row=0, column=0, sticky=tk.W, padx=(0, 20))
         
         background_check = ttk.Checkbutton(settings_frame, text="Run Chrome in Background (Headless)", 
-                                         variable=self.floating_manager.background_mode,
-                                         command=lambda: self.update_floating_mode_state('background'))
+                                           variable=self.floating_manager.background_mode,
+                                           command=lambda: self.update_floating_mode_state('background'))
         background_check.grid(row=0, column=1, sticky=tk.W)
         
         ttk.Label(settings_frame, text="Max Chrome Windows:").grid(row=1, column=0, sticky=tk.W)
@@ -449,7 +451,6 @@ class FacebookCodeSenderGUI:
         self.progress = ttk.Progressbar(progress_frame, mode='determinate')
         self.progress.grid(row=0, column=0, columnspan=4, sticky=(tk.W, tk.E))
         
-        # Enhanced Stats Label
         self.progress_label = ttk.Label(progress_frame, text="Ready", font=("Arial", 10))
         self.progress_label.grid(row=1, column=0, columnspan=4, pady=(5, 0))
         
@@ -499,7 +500,9 @@ class FacebookCodeSenderGUI:
         else:
             self.license_status.config(text=f"❌ {message}", foreground="red")
             self.start_button.config(state=tk.DISABLED)
-    
+            if "Key Generated" in message or "Expires" in message or "Server Data Error" in message:
+                 messagebox.showinfo("License Info", message)
+
     def check_license(self):
         def check():
             valid, message = self.license_manager.check_license()
@@ -587,7 +590,6 @@ class FacebookCodeSenderGUI:
         self.add_result(result)
         self.progress['value'] = current_progress
         
-        # Calculate stats based on "Successful" status string
         successful = sum(1 for r in total_results if r['message'] == 'Successful')
         not_found = sum(1 for r in total_results if r['message'] == 'Not Found')
         captcha = sum(1 for r in total_results if r['message'] == 'Captcha')
@@ -596,13 +598,11 @@ class FacebookCodeSenderGUI:
         stats = f"Done: {current_progress}/{self.progress['maximum']} | Success: {successful} | Not Found: {not_found} | Captcha: {captcha} | Failed: {failed}"
         self.progress_label.config(text=stats)
 
-
     def add_result(self, result):
         message = result['message']
         phone = result['phone_number']
         win = result['window']
         
-        # Assign icons based on message
         if message == "Successful": icon = "✅"
         elif message == "Captcha": icon = "⚠️"
         elif message == "Not Found": icon = "🚫"
